@@ -11,14 +11,13 @@ items = [{ "naziv": "Chair", "komada": 1, "cena": 233 },
 
 document.addEventListener("DOMContentLoaded", function(){
     render(items)
-    updateUkupnaCena();
 })
 
 function ukupnaCena(item) {
     return item.komada * item.cena;
 }
 function ukupnaCenaTabele(items) {
-    let  uct = 0;
+    let uct = 0;
     items.forEach(item => {
       uct += ukupnaCena(item);
     });
@@ -50,7 +49,6 @@ function render(items){
         dugmeM.addEventListener("click", function() {
             update(-1);
         });
-    
         dugmeP.addEventListener("click", function() {
             update(1);
         });
@@ -58,17 +56,12 @@ function render(items){
             if (item.komada + kol >= 0) {
                 item.komada += kol;
                 kolicina.innerHTML = item.komada;
-                ukupna.innerHTML = ukupnaCena(item);
-                updateUkupnaCena();  // Dodajte ovo kako biste ažurirali ukupnu cenu
+                ukupna.innerHTML = ukupnaCena(item); 
+                ukupnaRed.innerHTML = "Ukupna cena: " + ukupnaCenaTabele(items);
             }
         }
-        
-        function updateUkupnaCena() {
-            let ukupnaCenaF = items.reduce((total, item) => total + ukupnaCena(item), 0);
-            const ukupnaRed = tabela.querySelector("#ukupnaRed td");
-            ukupnaRed.innerHTML = "Ukupna cena: " + ukupnaCenaF;
-        }
-        
+        const ukupnaRed = tabelaR.querySelector("#ukupnaRed td");
+        ukupnaRed.innerHTML = "Ukupna cena: " + ukupnaCenaTabele(items);
         ukupna.innerHTML = ukupnaCena(item)
         red.appendChild(ukupna)
         tabela.appendChild(red)
